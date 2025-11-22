@@ -1,7 +1,14 @@
 {
   "name": "cifra",
-  "private": true,
   "version": "1.0.0",
+  "description": "Платформа для создания и продажи цифровых продуктов с интеграцией AI",
+  "author": {
+    "name": "Артём Прянишников",
+    "email": "pryanishnikovarem@gmail.com",
+    "url": "https://github.com/FrankFMY"
+  },
+  "license": "MIT",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "next dev",

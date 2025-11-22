@@ -180,6 +180,14 @@ cifra/
 
 Удалите папку `pb_data/` и перезапустите PocketBase - все данные будут созданы заново.
 
+## Автор
+
+**Артём Прянишников** (FrankFMY)
+
+- 📧 Email: [pryanishnikovarem@gmail.com](mailto:pryanishnikovarem@gmail.com)
+- 💬 Telegram: [@frankfmy](https://t.me/frankfmy)
+- 🐙 GitHub: [@FrankFMY](https://github.com/FrankFMY)
+
 ## Лицензия
 
-MIT
+MIT License - см. файл [LICENSE](LICENSE) для деталей.
