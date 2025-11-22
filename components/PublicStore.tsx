@@ -22,11 +22,7 @@ const PublicStore: React.FC<PublicStoreProps> = ({ product, sellerSettings, onCl
   const [otherProducts, setOtherProducts] = useState<Product[]>([]);
   const [activeModal, setActiveModal] = useState<'privacy' | 'terms' | null>(null);
   
-  // Checkout State
-  const [paymentMethod, setPaymentMethod] = useState<'card' | 'sbp'>('card');
-  const [cardNumber, setCardNumber] = useState('');
-  const [cardExpiry, setCardExpiry] = useState('');
-  const [cardCvc, setCardCvc] = useState('');
+  // Checkout State (убраны поля карты, так как оплата происходит на стороне ЮKassa)
   
   // Promo Code State
   const [promoCode, setPromoCode] = useState('');
@@ -98,32 +94,6 @@ const PublicStore: React.FC<PublicStoreProps> = ({ product, sellerSettings, onCl
     }
   };
 
-  const formatCardNumber = (value: string) => {
-    const v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-    const matches = v.match(/\d{4,16}/g);
-    const match = matches && matches[0] || '';
-    const parts = [];
-    for (let i = 0, len = match.length; i < len; i += 4) {
-      parts.push(match.substring(i, i + 4));
-    }
-    if (parts.length) {
-      return parts.join(' ');
-    } else {
-      return value;
-    }
-  };
-
-  const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setCardNumber(formatCardNumber(e.target.value));
-  };
-
-  const handleExpiryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      let v = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-      if (v.length >= 2) {
-          v = v.substring(0, 2) + '/' + v.substring(2, 4);
-      }
-      setCardExpiry(v);
-  };
 
   const downloadFile = () => {
       const content = `
@@ -155,40 +125,51 @@ ${product.description}
         alert("Пожалуйста, введите корректный Email");
         return;
     }
-    
-    if (paymentMethod === 'card') {
-        if (cardNumber.length < 16) {
-            alert("Введите полный номер карты");
-            return;
-        }
-    }
 
     setProcessingState('processing');
 
-    // Simulate Payment Gateway delay
-    setTimeout(async () => {
-        try {
-          await pbService.sales.createSale(product.id, finalTotal, email);
-          if (appliedPromo) {
-            const promo = await pbService.promos.getPromoByCode(appliedPromo.code);
-            if (promo) {
-              await pbService.promos.incrementPromoUses(promo.id);
-            }
-          }
-        } catch (error) {
-          // Fallback to localStorage
-          StorageService.recordSale(product.id, finalTotal, email);
-        }
-        
-        setProcessingState('success');
-        
-        confetti({
-            particleCount: 150,
-            spread: 70,
-            origin: { y: 0.6 },
-            colors: [sellerSettings.accentColor, '#ffffff', '#10b981']
-        });
-    }, 2500);
+    try {
+      // Получаем userId, если пользователь авторизован
+      let userId: string | undefined;
+      try {
+        const currentUser = await pbService.auth.getCurrentUser();
+        userId = currentUser?.id;
+      } catch {
+        // Пользователь не авторизован, это нормально для гостевых покупок
+      }
+
+      // Создаем платеж через API route
+      const response = await fetch('/api/payment/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          productId: product.id,
+          amount: finalTotal,
+          description: `Покупка: ${product.title}`,
+          customerEmail: email,
+          userId: userId,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Ошибка создания платежа');
+      }
+
+      // Перенаправляем пользователя на страницу оплаты ЮKassa
+      if (data.confirmationUrl) {
+        window.location.href = data.confirmationUrl;
+      } else {
+        throw new Error('Не получена ссылка на оплату');
+      }
+    } catch (error) {
+      console.error('Payment error:', error);
+      alert(error instanceof Error ? error.message : 'Ошибка при создании платежа. Попробуйте еще раз.');
+      setProcessingState('idle');
+    }
   };
 
   if (processingState === 'success') {
@@ -458,76 +439,16 @@ ${product.description}
                               />
                           </div>
 
-                           {/* Payment Methods */}
-                           <div>
-                              <label className="block text-xs font-medium text-zinc-400 mb-1.5 uppercase">Способ оплаты</label>
-                              <div className="grid grid-cols-2 gap-3">
-                                  <button 
-                                    onClick={() => setPaymentMethod('card')}
-                                    className={`flex flex-col items-center justify-center p-3 rounded-lg border transition-all ${paymentMethod === 'card' ? 'bg-violet-600/10 border-violet-500 text-violet-300' : 'bg-zinc-950 border-zinc-800 text-zinc-500 hover:border-zinc-700'}`}
-                                  >
-                                      <CreditCard className="w-5 h-5 mb-1" />
-                                      <span className="text-xs font-medium">Карта РФ</span>
-                                  </button>
-                                  <button 
-                                    onClick={() => setPaymentMethod('sbp')}
-                                    className={`flex flex-col items-center justify-center p-3 rounded-lg border transition-all ${paymentMethod === 'sbp' ? 'bg-emerald-600/10 border-emerald-500 text-emerald-300' : 'bg-zinc-950 border-zinc-800 text-zinc-500 hover:border-zinc-700'}`}
-                                  >
-                                      <QrCode className="w-5 h-5 mb-1" />
-                                      <span className="text-xs font-medium">СБП</span>
-                                  </button>
+                           {/* Payment Info */}
+                          <div className="p-4 bg-zinc-950 border border-zinc-800 rounded-lg">
+                              <div className="flex items-center gap-3 mb-2">
+                                  <ShieldCheck className="w-5 h-5 text-violet-400" />
+                                  <p className="text-sm text-white font-medium">Безопасная оплата через ЮKassa</p>
                               </div>
-                           </div>
-
-                          {/* Card Inputs */}
-                          {paymentMethod === 'card' && (
-                            <div className="animate-fade-in space-y-3">
-                                <div className="relative">
-                                    <input 
-                                        type="text" 
-                                        value={cardNumber}
-                                        onChange={handleCardNumberChange}
-                                        placeholder="0000 0000 0000 0000"
-                                        maxLength={19}
-                                        className="w-full bg-zinc-950 border border-zinc-700 rounded-lg pl-10 pr-4 py-3 text-white focus:ring-2 focus:ring-violet-500 outline-none font-mono tracking-wide"
-                                    />
-                                    <div className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center pointer-events-none">
-                                        <div className="w-5 h-3 bg-zinc-700 rounded-sm"></div>
-                                    </div>
-                                </div>
-                                <div className="grid grid-cols-2 gap-3">
-                                    <input 
-                                        type="text" 
-                                        value={cardExpiry}
-                                        onChange={handleExpiryChange}
-                                        placeholder="MM/YY" 
-                                        maxLength={5}
-                                        className="bg-zinc-950 border border-zinc-700 rounded-lg px-4 py-3 text-white text-center focus:ring-2 focus:ring-violet-500 outline-none" 
-                                    />
-                                    <input 
-                                        type="password" 
-                                        value={cardCvc}
-                                        onChange={(e) => setCardCvc(e.target.value.replace(/\D/g, ''))}
-                                        placeholder="CVC" 
-                                        maxLength={3}
-                                        className="bg-zinc-950 border border-zinc-700 rounded-lg px-4 py-3 text-white text-center focus:ring-2 focus:ring-violet-500 outline-none" 
-                                    />
-                                </div>
-                            </div>
-                          )}
-
-                           {/* SBP Info */}
-                           {paymentMethod === 'sbp' && (
-                               <div className="animate-fade-in p-4 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center gap-4">
-                                   <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center p-1">
-                                       <QrCode className="w-full h-full text-black" />
-                                   </div>
-                                   <div>
-                                       <p className="text-sm text-white font-medium">Оплата через приложение банка</p>
-                                       <p className="text-xs text-zinc-500">Сбербанк, Тинькофф, Альфа и др.</p>
-                                   </div>
-                               </div>
-                           )}
+                              <p className="text-xs text-zinc-500">
+                                  После нажатия кнопки "Оплатить" вы будете перенаправлены на защищенную страницу оплаты, где сможете выбрать способ оплаты: банковская карта, СБП, электронные кошельки и другие методы.
+                              </p>
+                          </div>
 
                            {/* Promo Input */}
                            <div className="pt-2">
@@ -551,11 +472,20 @@ ${product.description}
 
                           <button 
                               onClick={handlePay}
-                              disabled={!email || (paymentMethod === 'card' && cardNumber.length < 19)}
+                              disabled={!email || processingState !== 'idle'}
                               className="w-full py-3 bg-white hover:bg-zinc-200 text-black font-bold rounded-lg mt-4 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                           >
-                              {paymentMethod === 'sbp' ? <Smartphone className="w-4 h-4"/> : <Lock className="w-4 h-4"/>}
-                              Оплатить {finalTotal} ₽
+                              {processingState !== 'idle' ? (
+                                <>
+                                  <Loader2 className="w-4 h-4 animate-spin" />
+                                  Создание платежа...
+                                </>
+                              ) : (
+                                <>
+                                  <Lock className="w-4 h-4" />
+                                  Оплатить {finalTotal} ₽
+                                </>
+                              )}
                           </button>
                       </div>
                   )}

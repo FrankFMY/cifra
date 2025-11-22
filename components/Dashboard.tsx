@@ -48,11 +48,11 @@ const Dashboard: React.FC<DashboardProps> = ({ onCreateClick, onEditClick, onPro
     } catch (error) {
       // Fallback to localStorage
       console.error('Failed to fetch from PocketBase, using localStorage:', error);
-      const p = StorageService.getProducts();
-      const s = StorageService.getSales();
-      setProducts(p);
-      setSales(s);
-      setAvailableBalance(StorageService.getAvailableBalance());
+    const p = StorageService.getProducts();
+    const s = StorageService.getSales();
+    setProducts(p);
+    setSales(s);
+    setAvailableBalance(StorageService.getAvailableBalance());
     }
     setLoading(false);
   };
@@ -79,7 +79,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onCreateClick, onEditClick, onPro
           await pbService.products.deleteProduct(id);
         } catch (error) {
           // Fallback to localStorage
-          StorageService.deleteProduct(id);
+        StorageService.deleteProduct(id);
         }
         fetchData();
     }
@@ -101,12 +101,12 @@ const Dashboard: React.FC<DashboardProps> = ({ onCreateClick, onEditClick, onPro
         alert(`Средства (${amount} ₽) успешно отправлены на вашу карту.`);
       } catch (error) {
         // Fallback to localStorage
-        StorageService.requestPayout(amount);
-        setIsWithdrawing(false);
-        setShowWithdrawModal(false);
-        setWithdrawAmount('');
-        fetchData();
-        alert(`Средства (${amount} ₽) успешно отправлены на вашу карту.`);
+          StorageService.requestPayout(amount);
+          setIsWithdrawing(false);
+          setShowWithdrawModal(false);
+          setWithdrawAmount('');
+          fetchData();
+          alert(`Средства (${amount} ₽) успешно отправлены на вашу карту.`);
       }
   };
 
@@ -133,8 +133,8 @@ const Dashboard: React.FC<DashboardProps> = ({ onCreateClick, onEditClick, onPro
     }
     const url = `${typeof window !== 'undefined' ? window.location.origin : ''}/product/${product.id}`;
     if (typeof window !== 'undefined' && navigator.clipboard) {
-      navigator.clipboard.writeText(url);
-      alert(`Ссылка на магазин скопирована: ${url}`);
+    navigator.clipboard.writeText(url);
+    alert(`Ссылка на магазин скопирована: ${url}`);
     }
   };
 
@@ -283,33 +283,33 @@ const Dashboard: React.FC<DashboardProps> = ({ onCreateClick, onEditClick, onPro
           <div className="h-48 w-full relative min-h-[192px]">
             {chartsReady && (
               <ResponsiveContainer width="100%" height={192} minWidth={0}>
-                <PieChart>
-                  <Pie
-                    data={TRAFFIC_DATA}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={60}
-                    outerRadius={80}
-                    paddingAngle={5}
-                    dataKey="value"
-                  >
-                    {TRAFFIC_DATA.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} stroke="none" />
-                    ))}
-                  </Pie>
-                  <Tooltip 
-                     contentStyle={{ backgroundColor: '#18181b', border: '1px solid #3f3f46', borderRadius: '8px' }}
-                     itemStyle={{ color: '#e4e4e7' }}
-                  />
-                </PieChart>
-              </ResponsiveContainer>
+              <PieChart>
+                <Pie
+                  data={TRAFFIC_DATA}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={60}
+                  outerRadius={80}
+                  paddingAngle={5}
+                  dataKey="value"
+                >
+                  {TRAFFIC_DATA.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} stroke="none" />
+                  ))}
+                </Pie>
+                <Tooltip 
+                   contentStyle={{ backgroundColor: '#18181b', border: '1px solid #3f3f46', borderRadius: '8px' }}
+                   itemStyle={{ color: '#e4e4e7' }}
+                />
+              </PieChart>
+            </ResponsiveContainer>
             )}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-white">1000+</div>
-                <div className="text-xs text-zinc-500">Визитов</div>
-              </div>
-            </div>
+             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div className="text-center">
+                   <div className="text-2xl font-bold text-white">1000+</div>
+                   <div className="text-xs text-zinc-500">Визитов</div>
+                </div>
+             </div>
           </div>
           <div className="space-y-3 mt-4">
              {TRAFFIC_DATA.map((item) => (
