@@ -57,3 +57,40 @@ export async function getPublicProduct(id: string): Promise<ServerProduct | null
   }
 }
 
+/**
+ * Fetch all public products from PocketBase (server-side)
+ * Used for generating sitemap
+ */
+export async function getPublicProducts(): Promise<ServerProduct[]> {
+  try {
+    const response = await fetch(
+      `${PB_URL}/api/collections/products/records?filter=status%20%3D%20%27published%27&perPage=500`,
+      {
+        cache: 'no-store', // Always fetch fresh data
+      }
+    );
+
+    if (!response.ok) {
+      return [];
+    }
+
+    const data = await response.json();
+    
+    return (data.items || []).map((item: any) => {
+      // Build cover image URL if exists
+      let coverImage = '';
+      if (item.coverImage) {
+        coverImage = `${PB_URL}/api/files/${item.collectionId}/${item.id}/${item.coverImage}`;
+      }
+
+      return {
+        ...item,
+        coverImage,
+      };
+    });
+  } catch (error) {
+    console.error('Error fetching public products:', error);
+    return [];
+  }
+}
+

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { TrendingUp, DollarSign, Package, ArrowUpRight, Plus, MousePointerClick, Copy, ExternalLink, RefreshCw, Pencil, Trash2, CheckCircle, Circle, AlertCircle, Wallet, EyeOff } from 'lucide-react';
 import { Product, Sale } from '../types';
@@ -346,7 +347,13 @@ const Dashboard: React.FC<DashboardProps> = ({ onCreateClick, onEditClick, onPro
             >
               <div className="relative h-48 w-full bg-zinc-800 rounded-lg overflow-hidden">
                 {product.coverImage && product.coverImage.trim() !== '' ? (
-                  <img src={product.coverImage} alt={product.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <Image 
+                    src={product.coverImage} 
+                    alt={product.title} 
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    unoptimized={product.coverImage.startsWith('data:')}
+                  />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-zinc-500">
                     <span>Нет изображения</span>

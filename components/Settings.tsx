@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { User, Shield, Wallet, Save, Check, Clock, ArrowUpRight, Bell, Mail, AlertCircle, Trash2 } from 'lucide-react';
 import { StorageService } from '../services/storage';
 import { UserSettings, Payout } from '../types';
@@ -109,9 +110,15 @@ const Settings: React.FC = () => {
                     </div>
                     
                     <div className="flex items-center gap-6 mb-8">
-                    <div className="w-20 h-20 bg-zinc-800 rounded-full flex items-center justify-center text-zinc-500 border border-zinc-700 overflow-hidden">
+                    <div className="w-20 h-20 bg-zinc-800 rounded-full flex items-center justify-center text-zinc-500 border border-zinc-700 overflow-hidden relative">
                         {settings.avatarUrl && settings.avatarUrl.trim() !== '' ? (
-                            <img src={settings.avatarUrl} alt="Avatar" className="w-full h-full object-cover"/>
+                            <Image 
+                              src={settings.avatarUrl} 
+                              alt="Avatar" 
+                              fill
+                              className="object-cover"
+                              unoptimized={settings.avatarUrl.startsWith('data:')}
+                            />
                         ) : (
                             <span className="text-xl font-bold">{settings.displayName.charAt(0)}</span>
                         )}

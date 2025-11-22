@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { ShieldCheck, Download, CreditCard, Lock, Loader2, CheckCircle, X, QrCode, Smartphone, FileText, Mail } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { Product, UserSettings } from '../types';
@@ -228,15 +229,29 @@ ${product.description}
           
           <div className="space-y-6 animate-fade-in">
              <div className="aspect-4/3 rounded-2xl overflow-hidden border border-zinc-800 bg-zinc-900 shadow-2xl shadow-violet-900/10 relative">
-               {product.coverImage && product.coverImage.trim() !== '' && <img src={product.coverImage} alt={product.title} className="w-full h-full object-cover" />}
+               {product.coverImage && product.coverImage.trim() !== '' && (
+                 <Image 
+                   src={product.coverImage} 
+                   alt={product.title} 
+                   fill
+                   className="object-cover"
+                   unoptimized={product.coverImage.startsWith('data:')}
+                 />
+               )}
                <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent"></div>
              </div>
              
              <div className="flex items-center justify-between bg-zinc-900/50 p-4 rounded-xl border border-zinc-800/50 backdrop-blur-sm">
                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-zinc-800 overflow-hidden flex items-center justify-center shrink-0">
+                    <div className="w-12 h-12 rounded-full bg-zinc-800 overflow-hidden flex items-center justify-center shrink-0 relative">
                         {sellerSettings.avatarUrl && sellerSettings.avatarUrl.trim() !== '' ? (
-                            <img src={sellerSettings.avatarUrl} alt={sellerSettings.displayName} className="w-full h-full object-cover" />
+                            <Image 
+                              src={sellerSettings.avatarUrl} 
+                              alt={sellerSettings.displayName} 
+                              fill
+                              className="object-cover"
+                              unoptimized={sellerSettings.avatarUrl.startsWith('data:')}
+                            />
                         ) : (
                             <span className="text-xl font-bold text-zinc-500">{sellerSettings.displayName.charAt(0)}</span>
                         )}
@@ -314,8 +329,16 @@ ${product.description}
                             onClick={() => handleNavigateToProduct(other.id)}
                             className="group cursor-pointer bg-zinc-900 rounded-xl overflow-hidden border border-zinc-800 hover:border-zinc-600 transition-colors"
                         >
-                            <div className="h-40 overflow-hidden">
-                                {other.coverImage && other.coverImage.trim() !== '' && <img src={other.coverImage} alt={other.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />}
+                            <div className="h-40 overflow-hidden relative">
+                                {other.coverImage && other.coverImage.trim() !== '' && (
+                                  <Image 
+                                    src={other.coverImage} 
+                                    alt={other.title} 
+                                    fill
+                                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                                    unoptimized={other.coverImage.startsWith('data:')}
+                                  />
+                                )}
                             </div>
                             <div className="p-4">
                                 <h4 className="text-sm font-medium text-zinc-100 group-hover:text-violet-400 transition-colors line-clamp-1">{other.title}</h4>

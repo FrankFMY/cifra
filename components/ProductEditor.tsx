@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { ArrowLeft, Sparkles, Upload, Save, Loader2, Image as ImageIcon, RefreshCcw, Eye, EyeOff, AlertTriangle } from 'lucide-react';
 import { Product, ProductCategory } from '../types';
 import { CATEGORY_LABELS } from '../constants';
@@ -330,7 +331,13 @@ const ProductEditor: React.FC<ProductEditorProps> = ({ initialProduct, onBack, o
                 
                 <div className="aspect-4/3 w-full bg-zinc-950 rounded-lg border border-zinc-800 flex items-center justify-center overflow-hidden relative group">
                     {coverImage && coverImage.trim() !== '' ? (
-                         <img src={coverImage} alt="Cover" className="w-full h-full object-cover" />
+                         <Image 
+                           src={coverImage} 
+                           alt="Cover" 
+                           fill
+                           className="object-cover"
+                           unoptimized={coverImage.startsWith('data:')}
+                         />
                     ) : (
                         <div className="text-center p-4">
                             <ImageIcon className="w-10 h-10 text-zinc-700 mx-auto mb-2" />
