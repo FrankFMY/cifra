@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import PocketBase from 'pocketbase';
+import { sendPurchaseConfirmationEmail, sendSaleNotificationEmail } from '@/services/resendService';
+import { randomBytes } from 'crypto';
 
 const PB_URL = process.env.NEXT_PUBLIC_POCKETBASE_URL || 'http://127.0.0.1:8090';
 const pb = new PocketBase(PB_URL);
@@ -84,6 +86,72 @@ export async function POST(req: Request) {
               sales: (product.sales || 0) + 1,
               revenue: (product.revenue || 0) + netAmount,
             });
+
+            // 6. Создаем токен для доступа к файлам (действителен 30 дней)
+            const downloadToken = randomBytes(32).toString('hex');
+            const expiresAt = new Date();
+            expiresAt.setDate(expiresAt.getDate() + 30); // 30 дней
+
+            try {
+              await pb.collection('download_tokens').create({
+                token: downloadToken,
+                order: order.id,
+                product: order.product,
+                customerEmail: order.customerEmail,
+                expiresAt: expiresAt.toISOString(),
+                used: false,
+                downloadCount: 0,
+              });
+
+              // 7. Отправляем email покупателю с ссылкой на скачивание
+              const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+              const downloadUrl = `${siteUrl}/download/${downloadToken}`;
+
+              const customerEmailResult = await sendPurchaseConfirmationEmail({
+                email: order.customerEmail,
+                productTitle: product.title,
+                downloadToken,
+                downloadUrl,
+                amount: amount,
+                orderId: order.id,
+              });
+
+              if (customerEmailResult.success) {
+                console.log(`✅ Purchase confirmation email sent to ${order.customerEmail} for order ${order.id}`);
+              } else {
+                console.error(`❌ Failed to send purchase confirmation email to ${order.customerEmail}:`, customerEmailResult.error);
+              }
+
+              // 8. Отправляем уведомление продавцу (если включены уведомления)
+              try {
+                const owner = await pb.collection('users').getOne(order.owner);
+                if (owner.emailNotifications !== false) {
+                  const sellerEmailResult = await sendSaleNotificationEmail({
+                    sellerEmail: owner.email,
+                    productTitle: product.title,
+                    customerEmail: order.customerEmail,
+                    amount: amount,
+                    netAmount: netAmount,
+                    orderId: order.id,
+                  });
+
+                  if (sellerEmailResult.success) {
+                    console.log(`✅ Sale notification email sent to seller ${owner.email} for order ${order.id}`);
+                  } else {
+                    console.warn(`⚠️ Failed to send sale notification email to seller ${owner.email}:`, sellerEmailResult.error);
+                  }
+                } else {
+                  console.log(`ℹ️ Email notifications disabled for seller ${owner.email}, skipping notification`);
+                }
+              } catch (emailError) {
+                // Не критично, если не удалось отправить уведомление продавцу
+                console.warn('Failed to send seller notification:', emailError);
+              }
+            } catch (tokenError) {
+              // Не критично, если не удалось создать токен или отправить email
+              // Покупатель все равно может связаться с поддержкой
+              console.error('Failed to create download token or send email:', tokenError);
+            }
           }
         } catch (error) {
           console.error('Error updating order:', error);

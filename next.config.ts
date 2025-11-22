@@ -9,6 +9,10 @@ const nextConfig: NextConfig = {
     YOOKASSA_SHOP_ID: process.env.YOOKASSA_SHOP_ID,
     YOOKASSA_SECRET_KEY: process.env.YOOKASSA_SECRET_KEY,
     NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+    // Resend
+    RESEND_API_KEY: process.env.RESEND_API_KEY,
+    RESEND_SENDER_EMAIL: process.env.RESEND_SENDER_EMAIL,
+    RESEND_SENDER_NAME: process.env.RESEND_SENDER_NAME,
   },
   images: {
     remotePatterns: [
