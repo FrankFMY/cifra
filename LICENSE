@@ -1,22 +1,282 @@
-MIT License
+PolyForm Shield License 1.0.0 - Modified with Proprietary Clauses
 
-Copyright (c) 2025 Артём Прянишников (FrankFMY)
+Copyright (c) 2025 Artyom Pryanishnikov <Pryanishnikovartem@gmail.com>
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+================================================================================
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+IMPORTANT NOTICE / ВАЖНОЕ УВЕДОМЛЕНИЕ
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+This software is an INITIATIVE DEVELOPMENT by Artyom Pryanishnikov.
 
+Created independently, WITHOUT Technical Assignment (TZ) or direct order.
+
+Ownership and IP rights are NOT transferred automatically with employment.
+
+Rights remain with the Author until a separate Assignment Agreement is signed.
+
+Данное ПО — ИНИЦИАТИВНАЯ РАЗРАБОТКА Артёма Прянишникова.
+
+Создано самостоятельно, БЕЗ Технического Задания (ТЗ) или прямого приказа.
+
+Права НЕ переходят автоматически в рамках трудовых отношений.
+
+Права остаются за Автором до подписания Договора об отчуждении прав.
+
+================================================================================
+
+ACCEPTANCE
+
+In order to get any license under these terms, you must agree to them as
+both strict obligations and conditions to all your licenses.
+
+PERMITTED USE
+
+You may use the software for any purpose, subject to the restrictions below.
+
+RESTRICTIONS
+
+You may not:
+
+1. Provide the software to third parties as a hosted or managed service,
+   where the service provides users with access to any substantial set of
+   the features or functionality of the software.
+
+2. Move, change, disable, or circumvent the license key functionality in
+   the software, and you may not remove or obscure any functionality in
+   the software that is protected by the license key.
+
+3. Remove or obscure any licensing, copyright, or other notices of the
+   licensor in the software.
+
+COMMERCIAL USE
+
+Commercial use by entities other than the Copyright Holder requires a
+separate license agreement. Contact: Pryanishnikovartem@gmail.com
+
+For commercial licensing, the following terms may apply:
+- Revenue share (royalty)
+- Equity stake
+- One-time payment
+- Combination of the above
+
+FAIR USE
+
+You may:
+
+1. Use this software for personal, educational, or evaluation purposes.
+2. Fork and modify for personal use.
+3. Study the source code.
+4. Contribute improvements back to the project.
+
+PATENTS
+
+The licensor grants you a license, under any patent claims the licensor
+can license, or becomes able to license, to make, have made, use, sell,
+offer for sale, import and have imported the software.
+
+DISCLAIMER
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+OR IMPLIED. THE LICENSOR WILL NOT BE LIABLE FOR ANY DAMAGES ARISING FROM
+THE USE OF THIS SOFTWARE.
+
+TERMINATION
+
+If you violate any terms of this license, your license ends immediately.
+The licensor may also terminate this license at any time by providing
+notice to you.
+
+Upon termination, you must:
+- Stop using the software
+- Delete all copies
+- Provide confirmation of deletion upon request
+
+================================================================================
+
+CONTACT / КОНТАКТЫ
+
+For licensing inquiries / По вопросам лицензирования:
+
+    Artyom Pryanishnikov
+    Email: Pryanishnikovartem@gmail.com
+    GitHub: https://github.com/FrankFMY
+    Telegram: @frankfmy
+
+================================================================================
+
+GOVERNING LAW / ПРИМЕНИМОЕ ПРАВО
+
+This license is governed by the laws of the Russian Federation.
+
+All disputes shall be resolved exclusively in the Arbitrazh Court of
+Saratov Region (Арбитражный суд Саратовской области), Saratov, Russia.
+
+Настоящая лицензия регулируется законодательством Российской Федерации.
+
+Все споры подлежат рассмотрению исключительно в Арбитражном суде 
+Саратовской области, г. Саратов.
+
+================================================================================
+
+                              CIFRA PLATFORM
+
+                    NOTICE OF INTELLECTUAL PROPERTY RIGHTS
+
+                 УВЕДОМЛЕНИЕ О ПРАВАХ ИНТЕЛЛЕКТУАЛЬНОЙ СОБСТВЕННОСТИ
+
+================================================================================
+
+Copyright (c) 2025 Artyom Pryanishnikov (Артём Алексеевич Прянишников)
+
+================================================================================
+
+                     INITIATIVE DEVELOPMENT NOTICE
+
+                  УВЕДОМЛЕНИЕ ОБ ИНИЦИАТИВНОЙ РАЗРАБОТКЕ
+
+================================================================================
+
+IMPORTANT NOTICE
+
+This software is an INITIATIVE DEVELOPMENT by Artyom Pryanishnikov ("Author").
+
+It was created INDEPENDENTLY, without a specific Technical Assignment (TZ) 
+or direct order from any Employer.
+
+The Author may grant third parties a LIMITED RIGHT to use this software 
+"AS IS" under separate agreements.
+
+OWNERSHIP and INTELLECTUAL PROPERTY RIGHTS are NOT transferred automatically 
+with any employment relationship and remain EXCLUSIVELY with the Author 
+until a separate Assignment Agreement is signed.
+
+---
+
+ВАЖНОЕ УВЕДОМЛЕНИЕ
+
+Данное программное обеспечение является ИНИЦИАТИВНОЙ РАЗРАБОТКОЙ 
+Артёма Прянишникова («Автор»).
+
+Оно создано САМОСТОЯТЕЛЬНО, без конкретного Технического Задания (ТЗ) 
+или прямого приказа какого-либо Работодателя.
+
+Автор может предоставлять третьим лицам ОГРАНИЧЕННОЕ ПРАВО использования 
+данного ПО «КАК ЕСТЬ» на основании отдельных соглашений.
+
+ИСКЛЮЧИТЕЛЬНЫЕ ПРАВА НЕ ПЕРЕХОДЯТ к Работодателю автоматически в рамках 
+трудовых отношений и остаются ИСКЛЮЧИТЕЛЬНО за Автором до момента 
+подписания отдельного Договора об отчуждении прав.
+
+================================================================================
+
+                        LEGAL BASIS / ПРАВОВОЕ ОСНОВАНИЕ
+
+================================================================================
+
+Under Article 1295 of the Civil Code of the Russian Federation:
+
+A "service work" (служебное произведение) requires EITHER:
+
+- Creation within the scope of employment DUTIES, OR
+
+- Creation under a SPECIFIC ASSIGNMENT from the employer
+
+This software meets NEITHER criterion:
+
+1. NO TECHNICAL ASSIGNMENT (TZ) was issued for this development
+
+2. NO DIRECT ORDER was given to create this software
+
+3. This is the Author's INITIATIVE, not an employment duty
+
+4. The Author RETAINS all intellectual property rights
+
+---
+
+Согласно статье 1295 Гражданского кодекса Российской Федерации:
+
+«Служебное произведение» требует ЛИБО:
+
+- Создания в рамках трудовых ОБЯЗАННОСТЕЙ, ЛИБО
+
+- Создания по КОНКРЕТНОМУ ЗАДАНИЮ работодателя
+
+Данное ПО НЕ соответствует НИ ОДНОМУ критерию:
+
+1. Техническое Задание (ТЗ) на данную разработку НЕ ВЫДАВАЛОСЬ
+
+2. Прямой приказ на создание данного ПО НЕ ИЗДАВАЛСЯ
+
+3. Это ИНИЦИАТИВА Автора, а не трудовая обязанность
+
+4. Автор СОХРАНЯЕТ все права интеллектуальной собственности
+
+================================================================================
+
+                    LICENSE GRANT CONDITIONS
+
+                 УСЛОВИЯ ПРЕДОСТАВЛЕНИЯ ЛИЦЕНЗИИ
+
+================================================================================
+
+Any use of this software by third parties (including employers) constitutes
+ACCEPTANCE of the following terms:
+
+1. The user acknowledges the Author's exclusive ownership
+
+2. The user receives a LIMITED, NON-EXCLUSIVE, REVOCABLE license
+
+3. No ownership rights are transferred
+
+4. Commercial use requires a SEPARATE WRITTEN AGREEMENT
+
+5. The license may be terminated by the Author at any time
+
+---
+
+Любое использование данного ПО третьими лицами (включая работодателей)
+означает ПРИНЯТИЕ следующих условий:
+
+1. Пользователь признаёт исключительное право собственности Автора
+
+2. Пользователь получает ОГРАНИЧЕННУЮ, НЕИСКЛЮЧИТЕЛЬНУЮ, ОТЗЫВНУЮ лицензию
+
+3. Права собственности НЕ передаются
+
+4. Коммерческое использование требует ОТДЕЛЬНОГО ПИСЬМЕННОГО СОГЛАШЕНИЯ
+
+5. Лицензия может быть отозвана Автором в любой момент
+
+================================================================================
+
+                     INTELLECTUAL PROPERTY OWNER
+
+                   ПРАВООБЛАДАТЕЛЬ
+
+================================================================================
+
+ALL intellectual property rights belong EXCLUSIVELY to:
+
+    Artyom Pryanishnikov / Артём Прянишников
+
+    Email: Pryanishnikovartem@gmail.com
+
+    GitHub: https://github.com/FrankFMY
+
+    Telegram: @frankfmy
+
+================================================================================
+
+                        DISPUTE RESOLUTION
+
+                      РАЗРЕШЕНИЕ СПОРОВ
+
+================================================================================
+
+All disputes shall be resolved exclusively in the Arbitrazh Court of
+Saratov Region (Арбитражный суд Саратовской области), Saratov, Russia.
+
+Все споры подлежат рассмотрению исключительно в Арбитражном суде 
+Саратовской области, г. Саратов.
+
+================================================================================

@@ -2,13 +2,22 @@
 	"name": "cifra",
 	"version": "1.0.0",
 	"description": "Платформа для создания и продажи цифровых продуктов с интеграцией AI",
-	"author": {
-		"name": "Артём Прянишников",
-		"email": "pryanishnikovarem@gmail.com",
-		"url": "https://github.com/FrankFMY"
-	},
-	"license": "MIT",
+	"author": "Artyom Pryanishnikov <Pryanishnikovartem@gmail.com> (https://github.com/FrankFMY)",
+	"license": "SEE LICENSE IN LICENSE",
 	"private": true,
+	"homepage": "https://github.com/FrankFMY/cifra#readme",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/FrankFMY/cifra.git"
+	},
+	"bugs": {
+		"url": "https://github.com/FrankFMY/cifra/issues",
+		"email": "Pryanishnikovartem@gmail.com"
+	},
+	"packageManager": "pnpm@9.0.0",
+	"engines": {
+		"node": ">=18"
+	},
 	"type": "module",
 	"scripts": {
 		"dev": "next dev",
@@ -18,28 +27,29 @@
 		"lint:fix": "biome check --write .",
 		"format": "biome format . --write",
 		"type-check": "tsc --noEmit",
-		"full": "pnpm format && pnpm lint:fix && pnpm type-check && pnpm build"
+		"full": "pnpm format && pnpm lint:fix && pnpm type-check && pnpm build",
+		"copyright:add": "bun run scripts/add-copyright.ts"
 	},
 	"dependencies": {
-		"@aws-sdk/client-s3": "^3.937.0",
-		"@aws-sdk/s3-request-presigner": "^3.937.0",
+		"@aws-sdk/client-s3": "^3.943.0",
+		"@aws-sdk/s3-request-presigner": "^3.943.0",
 		"@google/genai": "^1.30.0",
 		"canvas-confetti": "^1.9.4",
-		"lucide-react": "^0.554.0",
-		"next": "^16.0.3",
-		"pocketbase": "^0.26.3",
+		"lucide-react": "^0.555.0",
+		"next": "^16.0.6",
+		"pocketbase": "^0.26.4",
 		"react": "^19.2.0",
 		"react-dom": "^19.2.0",
 		"react-hot-toast": "^2.6.0",
-		"recharts": "^3.4.1",
+		"recharts": "^3.5.1",
 		"resend": "^6.5.2"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^2.3.7",
+		"@biomejs/biome": "^2.3.8",
 		"@tailwindcss/postcss": "^4.1.17",
 		"@types/canvas-confetti": "^1.9.0",
 		"@types/node": "^24.10.1",
-		"@types/react": "^19.2.6",
+		"@types/react": "^19.2.7",
 		"@types/react-dom": "^19.2.3",
 		"tailwindcss": "^4.1.17",
 		"typescript": "~5.9.3"
